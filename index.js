@@ -11,10 +11,9 @@ const axios = require("axios").default;
 const moment = require("moment");
 const dotenv = require("dotenv");
 
-const hostname = "127.0.0.1";
-const port = 3000;
-
 dotenv.config();
+
+const port = process.env.PORT;
 
 //Local database connection url
 const url = process.env.DB_URL;
@@ -117,8 +116,8 @@ app.post("/", async (req, res) => {
       if (findResult[new Date().toLocaleDateString()]) {
         latestEntry = Object.keys(
           findResult[new Date().toLocaleDateString()]["current_date_obj"][
-            findResult[new Date().toLocaleDateString()]["current_date_obj"]
-              .length - 1
+          findResult[new Date().toLocaleDateString()]["current_date_obj"]
+            .length - 1
           ]
         )[0];
         databaseConnection.updateOne(
@@ -163,11 +162,9 @@ app.post("/", async (req, res) => {
 
     await web.chat.postMessage({
       channel: conversationId,
-      text: `User : ${employees[requestedEmployeeId] || "Unknown"} \n ${
-        latestEntry === "Punch In" ? "Punch Out" : "Punch In"
-      } : ${current_time_obj} \n Location: ${results},${req.body.lat},${
-        req.body.long
-      }\n IP Address: ${clientIp} \n User Agent: ${userAgentDetails}`,
+      text: `User : ${employees[requestedEmployeeId] || "Unknown"} \n ${latestEntry === "Punch In" ? "Punch Out" : "Punch In"
+        } : ${current_time_obj} \n Location: ${results},${req.body.lat},${req.body.long
+        }\n IP Address: ${clientIp} \n User Agent: ${userAgentDetails}`,
     });
 
     //After executing the all the process it will redirect it home page :
@@ -209,23 +206,21 @@ app.post("/admin", (req, res) => {
       //Redering the punchIn/Out details from database :
       return res.render("admin", {
         title: "Admin",
-        recardDetails: `Record for ${
-          employees[requestedId] || "Unknown"
-        } on ${finalDateFormat} : `,
+        recardDetails: `Record for ${employees[requestedId] || "Unknown"
+          } on ${finalDateFormat} : `,
         punchDetailsfromDatabase: punchDetailsfromDatabase,
       });
     } catch (e) {
       //Returns the error message if date not existed
       return res.render("admin", {
         title: "Admin",
-        errorMsgForDateNotExisted: `The Record for ${
-          employees[requestedId] || "Unknown"
-        } on ${finalDateFormat} is does not exist.`,
+        errorMsgForDateNotExisted: `The Record for ${employees[requestedId] || "Unknown"
+          } on ${finalDateFormat} is does not exist.`,
       });
     }
   });
 });
 //Server is running at this port:
-app.listen(port, hostname, () => {
-  return console.log(`server is running at http://${hostname}:${port}`);
+app.listen(port, () => {
+  return console.log(`server is running at ${port}`);
 });
