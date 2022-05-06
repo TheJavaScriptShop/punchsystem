@@ -1,0 +1,76 @@
+html
+	head
+		title= title
+		link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css")
+		script(src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js")
+		style
+			include ./punch.css
+	body
+		div(class="logo-container")
+			img(src="./public/images/banner.png" class="logo")
+		button(class="accordion")
+			img(src="./public/images/icon.png" class="icon-for-info")
+			p(class="info-caption") Click the Icon for ID's
+		div(class="panel")
+				table
+					tr
+						th ID
+						th Name
+					tr
+						td 000
+						td Priyank
+					tr
+						td 001
+						td Chetna
+					tr
+						td 002
+						td Vinay
+					tr
+						td 003
+						td Sridhar
+					tr
+						td 004
+						td Nikunj
+					tr
+						td 005
+						td Jayanth
+					tr
+						td 006
+						td Avantika
+					tr
+						td 007
+						td Harsh
+					tr
+						td 008
+						td Omprakash
+					tr
+						td 009
+						td Thejasri
+				a(href="/admin", class="employee-history" id="emp-history") Admin
+		div(class="container-element")
+			form#formSubmit(action="/" method="POST")
+				label(for="idField") Enter The ID :
+				br
+				input(
+  				type='hidden'
+  				name='lat',value="" id="lat")
+				input(
+  				type='hidden'
+  				name='long',value="" id="long")
+				input(
+  				type='text'
+  				name='id',value="" id="inputId" placeholder="Id" class="form-control")
+				br
+				label(for="parseKeyField") Enter The Pass Key :
+				br
+				input(
+  				type='password'
+  				name='passkey',value="" id="passKeyId" placeholder="Pass Key" class="form-control")
+				br
+				button(type="submit" id="formId" class="btn")
+			div(id="loader")
+		input(
+  		type='hidden'
+  		value=app_env id="app_env")
+		script
+			include punchIn.js
