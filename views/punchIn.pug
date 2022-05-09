@@ -1,53 +1,55 @@
 html
 	head
 		title= title
+		link(rel="shortcut icon" type="image/png" href="./public/images/tjsLogo.png")
 		link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css")
 		script(src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js")
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
 		style
 			include ./punch.css
 	body
-		div(class="logo-container")
+		div(class="logoContainer")
 			img(src="./public/images/banner.png" class="logo")
 		button(class="accordion")
-			img(src="./public/images/icon.png" class="icon-for-info")
-			p(class="info-caption") Click the Icon for ID's
+			img(src="./public/images/icon.png" class="iconForInfo")
+			p(class="infoCaption") Click the Icon for ID's
 		div(class="panel")
-				table
-					tr
-						th ID
-						th Name
-					tr
-						td 000
-						td Priyank
-					tr
-						td 001
-						td Chetna
-					tr
-						td 002
-						td Vinay
-					tr
-						td 003
-						td Sridhar
-					tr
-						td 004
-						td Nikunj
-					tr
-						td 005
-						td Jayanth
-					tr
-						td 006
-						td Avantika
-					tr
-						td 007
-						td Harsh
-					tr
-						td 008
-						td Omprakash
-					tr
-						td 009
-						td Thejasri
-				a(href="/admin", class="employee-history" id="emp-history") Admin
-		div(class="container-element")
+			table
+				tr
+					th ID
+					th Name
+				tr
+					td 000
+					td Priyank
+				tr
+					td 001
+					td Chetna
+				tr
+					td 002
+					td Vinay
+				tr
+					td 003
+					td Sridhar
+				tr
+					td 004
+					td Nikunj
+				tr
+					td 005
+					td Jayanth
+				tr
+					td 006
+					td Avantika
+				tr
+					td 007
+					td Harsh
+				tr
+					td 008
+					td Omprakash
+				tr
+					td 009
+					td Thejasri
+			a(href="/admin", class="employeeHistory" id="emp-history") Admin
+		div(class="containerElement")
 			form#formSubmit(action="/" method="POST")
 				label(for="idField") Enter The ID :
 				br
@@ -59,15 +61,15 @@ html
   				name='long',value="" id="long")
 				input(
   				type='text'
-  				name='id',value="" id="inputId" placeholder="Id" class="form-control")
+  				name='id',value="" id="inputId" placeholder="Id" class="formControl")
 				br
 				label(for="parseKeyField") Enter The Pass Key :
 				br
 				input(
   				type='password'
-  				name='passkey',value="" id="passKeyId" placeholder="Pass Key" class="form-control")
+  				name='passkey',value="" id="passKeyId" placeholder="Pass Key" class="formControl")
 				br
-				button(type="submit" id="formId" class="btn")
+				button(type="submit" id="formId" class="punchButton")
 			div(id="loader")
 		input(
   		type='hidden'

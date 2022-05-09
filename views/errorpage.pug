@@ -1,10 +1,12 @@
 html
 	head
 		title= title
+		script(src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js")
 		style
 			include ./punch.css
 	body
-		div(class="logo-container")
-			img(src="./public/images/banner.png" class="logo")
-		div(class="error-text-container")
+		div(class="logoContainer")
+			a(href="/" class="logoNavigation")
+				img(src="./public/images/banner.png" class="logo")
+		div(class="errorTextContainer")
 			h2 The application is only applicable for mobile device.

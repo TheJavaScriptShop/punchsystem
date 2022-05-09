@@ -4,6 +4,7 @@ const app = express();
 const pug = require("pug");
 const bodyParser = require("body-parser");
 const requestIp = require("request-ip");
+const PublicIp = require("nodejs-publicip");
 const mongoose = require("mongoose");
 const { WebClient } = require("@slack/web-api");
 const useragent = require("express-useragent");
@@ -54,7 +55,6 @@ app.get("/", (_, res) => {
     app_env: process.env.APP_ENV,
   });
 });
-
 //Punch in submit method:
 app.post("/", async (req, res) => {
   //If data is empty it will not store the data into db instead it will redirect to the home page
@@ -64,9 +64,10 @@ app.post("/", async (req, res) => {
     req.body.passkey.trim() !== process.env.PASS_KEY
   )
     return res.redirect("/?e=error");
-
   //Current time :
-  let current_time_obj = new Date().toLocaleTimeString();
+  let current_time_obj = new Date().toLocaleTimeString(undefined, {
+    timeZone: "Asia/Kolkata",
+  });
   //Form Data:
   const requestedEmployeeId = req.body.id.trim();
   const formData = {
@@ -88,10 +89,7 @@ app.post("/", async (req, res) => {
     }
   };
   await getAddressByReverseCoding();
-  //IP Address :
-  const clientIp = requestIp.getClientIp(req);
 
-  //UserAgent :
   const userAgentMobileOrDesktop =
     req.useragent.isMobile === true ? "Mobile" : "Desktop";
   const userAgentDetails =
@@ -116,8 +114,8 @@ app.post("/", async (req, res) => {
       if (findResult[new Date().toLocaleDateString()]) {
         latestEntry = Object.keys(
           findResult[new Date().toLocaleDateString()]["current_date_obj"][
-          findResult[new Date().toLocaleDateString()]["current_date_obj"]
-            .length - 1
+            findResult[new Date().toLocaleDateString()]["current_date_obj"]
+              .length - 1
           ]
         )[0];
         databaseConnection.updateOne(
@@ -159,14 +157,32 @@ app.post("/", async (req, res) => {
 
     // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
     const conversationId = process.env.CONVERSATION_ID;
-
-    await web.chat.postMessage({
-      channel: conversationId,
-      text: `User : ${employees[requestedEmployeeId] || "Unknown"} \n ${latestEntry === "Punch In" ? "Punch Out" : "Punch In"
-        } : ${current_time_obj} \n Location: ${results},${req.body.lat},${req.body.long
-        }\n IP Address: ${clientIp} \n User Agent: ${userAgentDetails}`,
-    });
-
+    //IP Address :
+    const clientIp = requestIp.getClientIp(req);
+    //Public-ip:
+    let ip = "";
+    const ipAddressForPublic_ip = async () => {
+      try {
+        const ipRes = await new PublicIp().queryPublicIPAddresses();
+        console.log(ipRes);
+        (ip = ipRes.ipv4), request.headers["x-forwarded-for"];
+      } catch (err) {
+        console.log(`error: ${err}`);
+      }
+    };
+    await ipAddressForPublic_ip();
+    try {
+      await web.chat.postMessage({
+        channel: conversationId,
+        text: `User : ${employees[requestedEmployeeId] || "Unknown"} \n ${
+          latestEntry === "Punch In" ? "Punch Out" : "Punch In"
+        } : ${current_time_obj} \n Location: ${results},${req.body.lat},${
+          req.body.long
+        }\n IP Address : ${ip}\n User Agent: ${userAgentDetails}`,
+      });
+    } catch (e) {
+      res.redirect("/?e=e_slack");
+    }
     //After executing the all the process it will redirect it home page :
     return res.redirect("/?e=success");
   });
@@ -206,16 +222,18 @@ app.post("/admin", (req, res) => {
       //Redering the punchIn/Out details from database :
       return res.render("admin", {
         title: "Admin",
-        recardDetails: `Record for ${employees[requestedId] || "Unknown"
-          } on ${finalDateFormat} : `,
+        recardDetails: `Record for ${
+          employees[requestedId] || "Unknown"
+        } on ${finalDateFormat} : `,
         punchDetailsfromDatabase: punchDetailsfromDatabase,
       });
     } catch (e) {
       //Returns the error message if date not existed
       return res.render("admin", {
         title: "Admin",
-        errorMsgForDateNotExisted: `The Record for ${employees[requestedId] || "Unknown"
-          } on ${finalDateFormat} is does not exist.`,
+        errorMsgForDateNotExisted: `The Record for ${
+          employees[requestedId] || "Unknown"
+        } on ${finalDateFormat} is does not exist.`,
       });
     }
   });
