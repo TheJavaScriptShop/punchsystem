@@ -1,7 +1,11 @@
 * {
   font-family: "Roboto";
-  margin: 0px;
   background-color: #f5f5f5;
+  margin: 0px;
+}
+body,
+html {
+  height: 100%;
 }
 .logoContainer {
   background-color: #faec4b;
@@ -25,28 +29,25 @@
   width: 40px;
 }
 .infoCaption {
-  padding-left: 5px;
-  padding-top: 10px;
+  padding: 8px;
 }
-table {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-collapse: collapse;
-  padding-bottom: 10px;
-}
-th,
-td {
-  border: 1px solid #000000;
-  width: 120px;
-  text-align: center;
-}
-.panel {
+.tableContainer {
   display: none;
-  text-align: center;
-  flex-direction: row;
+}
+.tableDiv {
+  display: flex;
   justify-content: center;
-  background-color: #f5f5f5;
+}
+.tableDiv th,
+td {
+  border: 1px solid;
+}
+.table {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+.adminText {
+  text-align: center;
 }
 .employeeHistory {
   color: #900c3f;
@@ -58,70 +59,59 @@ td {
   margin-top: 50px;
 }
 .formControl {
-  width: 350px;
+  width: 300px;
   padding: 5px;
   border-radius: 5px;
   border-width: 2px;
   margin-top: 5px;
   margin-bottom: 15px;
   border: 1px solid #000000;
+  padding: 10px;
+  color: #000000;
 }
 .punchButton {
-  color: black;
+  color: #900c3f;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   height: 100px;
   width: 100px;
-  margin-top: 60px;
-  margin-left: 130px;
+  position: relative;
+  left: 100px;
+  top: 45px;
   box-shadow: -20px -20px 25px rgba(255, 255, 255, 0.5),
     20px 20px 25px rgba(70, 70, 70, 0.12);
-  border-radius: 50%;
+  border-radius: 50px;
   border: 1px solid #ececec;
   outline: none;
   cursor: pointer;
 }
 .loader {
-  border: 2px solid #f3f3f3;
-  border-radius: 100px;
-  border-top: 2px solid #900c3f;
-  background-color: #f3f3f3;
+  position: absolute;
+  left: 200px;
+  top: 450px;
+  transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
-  -webkit-animation: spin 2s linear infinite; /*Safari */
-  animation: spin 2s linear infinite;
-  -moz-animation: spin 2s linear infinite;
-  -o-animation: spin 2s linear infinite;
-  margin-top: 187px;
-  margin-left: -218px;
+  background: transparent;
+  border: 3px solid #3c3c3c;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background-color: #ffffff;
 }
-/* Safari */
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
+.loader:before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 100px;
+  height: 100px;
+  border: 3px solid transparent;
+  border-top: 3px solid #fff000;
+  border-right: 3px solid #fff000;
+  border-radius: 100px;
+  animation: animateC 2s linear infinite;
 }
-@-moz-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-  }
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-@-o-keyframes spin {
-  0% {
-    -o-transform: rotate(0deg);
-  }
-  100% {
-    -o-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
+@keyframes animateC {
   0% {
     transform: rotate(0deg);
   }
@@ -129,15 +119,20 @@ td {
     transform: rotate(360deg);
   }
 }
+@keyframes animate {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
 /* Error-page-css */
 .errorTextContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 100px;
+  text-align: center;
   color: #900c3f;
 }
-/* history-page-css */
+/* Admin-page-css */
 .logoNavigation {
   cursor: pointer;
 }
@@ -155,40 +150,21 @@ td {
   margin-bottom: 20px;
   font-size: 16px;
 }
-.historypageFormInputElements:hover {
-  border: 2px solid #900c3f;
-}
 .dbResultsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 30px;
+  text-align: center;
 }
 .recardDetailsCaption {
-  padding-top: 20px;
   text-decoration: underline;
   color: #900c3f;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  text-align: center;
 }
 .historypageSubmitBtn {
-  margin-top: 20px;
   width: 100px;
-  border-radius: 5px;
-  border: 1px solid;
+  position: relative;
+  left: 85px;
   padding: 10px;
-  margin-left: 75px;
+  border: 0px;
   cursor: pointer;
   background-color: #900c3f;
   color: #ffffff;
-}
-.errorImageForAdmin {
-  height: 200px;
-  width: 350px;
-  opacity: 0.2;
-  margin-top: -100px;
-}
-.errorMsg {
-  color: #f00713;
 }

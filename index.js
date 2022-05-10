@@ -3,7 +3,6 @@ const path = require("path");
 const app = express();
 const pug = require("pug");
 const bodyParser = require("body-parser");
-const requestIp = require("request-ip");
 const PublicIp = require("nodejs-publicip");
 const mongoose = require("mongoose");
 const { WebClient } = require("@slack/web-api");
@@ -157,18 +156,13 @@ app.post("/", async (req, res) => {
 
     // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
     const conversationId = process.env.CONVERSATION_ID;
-    //IP Address :
-    const clientIp = requestIp.getClientIp(req);
     //Public-ip:
     let ip = "";
     const ipAddressForPublic_ip = async () => {
       try {
         const ipRes = await new PublicIp().queryPublicIPAddresses();
-        console.log(ipRes);
-        (ip = ipRes.ipv4), request.headers["x-forwarded-for"];
-      } catch (err) {
-        console.log(`error: ${err}`);
-      }
+        ip = ipRes.ipv4;
+      } catch (err) {}
     };
     await ipAddressForPublic_ip();
     try {
@@ -178,7 +172,9 @@ app.post("/", async (req, res) => {
           latestEntry === "Punch In" ? "Punch Out" : "Punch In"
         } : ${current_time_obj} \n Location: ${results},${req.body.lat},${
           req.body.long
-        }\n IP Address : ${ip}\n User Agent: ${userAgentDetails}`,
+        }\n IP Address : ${ip},${
+          req.headers["x-forwarded-for"] || ""
+        } \n User Agent: ${userAgentDetails}`,
       });
     } catch (e) {
       res.redirect("/?e=e_slack");

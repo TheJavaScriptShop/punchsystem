@@ -28,7 +28,6 @@ html
 		div(class="dbResultsContainer")
 			if errorMsgForDateNotExisted
 				p(class="errorMsg")= errorMsgForDateNotExisted
-				img(src="./public/images/errorImage.png" class="errorImageForAdmin")
 			else
 				each item in punchDetailsfromDatabase
 					each val,key in item

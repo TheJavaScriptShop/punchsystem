@@ -13,6 +13,7 @@ var i;
 for (i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function () {
     this.classList.toggle("active");
+    console.log(this.nextElementSibling);
     var panel = this.nextElementSibling;
     if (panel.style.display === "block") {
       panel.style.display = "none";
@@ -110,7 +111,7 @@ const sendErrorNotifcationForSlack = () => {
   new Notify({
     status: "error",
     title:
-      "“Sorry, Your data is stored safely but,unable to send the message to slack.”",
+      "“Sorry, Your data is stored safely but unable to send the message to slack.”",
     effect: "fade",
     speed: 200,
     customClass: "",
@@ -118,7 +119,7 @@ const sendErrorNotifcationForSlack = () => {
     showIcon: true,
     showCloseButton: true,
     autoclose: true,
-    autotimeout: 3000,
+    autotimeout: 5000,
     gap: 0,
     distance: 0,
     type: 1,
