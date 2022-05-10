@@ -1,7 +1,7 @@
 const isMobile = /iPhone|iPad|IEMobile|iphone SE|Android/i.test(
   window.navigator.userAgent
 );
-
+//Desktop view website will not available:
 const app_env = document.getElementById("app_env").value;
 if (!isMobile && app_env !== "dev") {
   window.location = "/errorpage";
@@ -13,6 +13,7 @@ var i;
 for (i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function () {
     this.classList.toggle("active");
+    console.log(this.nextElementSibling);
     var panel = this.nextElementSibling;
     if (panel.style.display === "block") {
       panel.style.display = "none";
@@ -105,6 +106,26 @@ const sendErrorNotifcation = () => {
     position: "right top",
   });
 };
+//Error massage for slack will not work:
+const sendErrorNotifcationForSlack = () => {
+  new Notify({
+    status: "error",
+    title:
+      "“Sorry, Your data is stored safely but unable to send the message to slack.”",
+    effect: "fade",
+    speed: 200,
+    customClass: "",
+    customIcon: "",
+    showIcon: true,
+    showCloseButton: true,
+    autoclose: true,
+    autotimeout: 5000,
+    gap: 0,
+    distance: 0,
+    type: 1,
+    position: "right top",
+  });
+};
 
 //Handling the success and error message notifications :
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -114,5 +135,8 @@ if (params.e === "success") {
   window.history.pushState({}, "", "/");
 } else if (params.e === "error") {
   sendErrorNotifcation();
+  window.history.pushState({}, "", "/");
+} else if (params.e === "e_slack") {
+  sendErrorNotifcationForSlack();
   window.history.pushState({}, "", "/");
 }

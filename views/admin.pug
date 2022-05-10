@@ -1,32 +1,33 @@
 html
 	head
 		title= title
+		script(src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js")
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
 		style
 			include ./punch.css
 	body
-		div(class="logo-container")
-			a(href="/" class="logo-navigation")
+		div(class="logoContainer")
+			a(href="/" class="logoNavigation")
 				img(src="./public/images/banner.png" class="logo")
-		div(class="history-page-container")
+		div(class="historyPageContainer")
 			form#adminformId(action="/admin" method="POST")
 				label(for="secretcode") Secret Key :
 				br
-				input(type="password" name='secretcode',value="" id="secretinputId" class="historypage-form-input-elements" placeholder="Secret Key" required)
+				input(type="password" name='secretcode',value="" id="secretinputId" class="historypageFormInputElements" placeholder="Secret Key" required)
 				br
 				label(for="id") ID :
 				br
-				input(type='text' name='id' value="" id="idInput" class="historypage-form-input-elements" placeholder="ID" required)
+				input(type='text' name='id' value="" id="idInput" class="historypageFormInputElements" placeholder="ID" required)
 				br
 				label(for="date") Date:
 				br
-				input(type="date" name='date' value=dateDefaultValue id="dateInputId" class="historypage-form-input-elements" placeholder="MM/DD/YYYY")
+				input(type="date" name='date' value=dateDefaultValue id="dateInputId" class="historypageFormInputElements" placeholder="MM/DD/YYYY")
 				br
-				button(type="submit" id="btnIDForHistory" class="historypage-submit-btn") Submit
-		h4(class="recard-details-caption")= recardDetails
-		div(class="db-results-container")
+				button(type="submit" id="btnIDForHistory" class="historypageSubmitBtn") Submit
+		h4(class="recardDetailsCaption")= recardDetails
+		div(class="dbResultsContainer")
 			if errorMsgForDateNotExisted
 				p(class="errorMsg")= errorMsgForDateNotExisted
-				img(src="./public/images/errorImage.png" class="errorImageForAdmin")
 			else
 				each item in punchDetailsfromDatabase
 					each val,key in item
