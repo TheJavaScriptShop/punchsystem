@@ -45,6 +45,7 @@ const employees = {
   "007": "Harsh",
   "008": "Omprakash",
   "009": "Thejasri",
+  "010": "Suresh Rukku",
 };
 
 //Punch in landing page method:
